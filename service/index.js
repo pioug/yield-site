@@ -19,7 +19,9 @@ const q = faunadb.query;
 const time = formatISO(startOfHour(subHours(new Date(), 1)));
 
 faunaClient
-  .query(q.Get(q.Match(q.Index("ftx_rates_by_time"), q.Time(time))))
+  .query(
+    q.Get(q.Match(q.Index("ftx_rates_by_coin_time"), ["USD", q.Time(time)]))
+  )
   .catch(function (ret) {
     return ftx.privateGetSpotMarginLendingRates().then(function ({ result }) {
       const savingRates = result
