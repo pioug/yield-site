@@ -10,14 +10,10 @@ export default (req, res) => {
     .query(
       q.Mean(
         q.Map(
-          q.Paginate(
-            q.Range(
-              q.Match("ftx_rates_by_time"),
-              q.TimeSubtract(q.Now(), 1, "day"),
-              q.Now()
-            )
-          ),
-          q.Lambda((time, x) => q.Select(["data", "rate"], q.Get(x)))
+          q.Paginate(q.Match(q.Index("ftx_rates_by_coin_time_desc"), "USD"), {
+            size: 24,
+          }),
+          q.Lambda((time, coin, rate, ref) => rate)
         )
       )
     )
