@@ -2,7 +2,11 @@ body {
   font-family: sans-serif;
 }
 
-canvas {
+main {
   max-width: 800px;
+  margin: auto;
+}
+
+canvas {
   width: 100%;
 }

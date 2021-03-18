@@ -98,7 +98,7 @@ export default function HomePage() {
     [data]
   );
   return (
-    <>
+    <main>
       <h1>APR for lending USD on FTX</h1>
       <div>
         <p>
@@ -117,6 +117,6 @@ export default function HomePage() {
           <canvas ref={canvas} />
         </div>
       </div>
-    </>
+    </main>
   );
 }
