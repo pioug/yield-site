@@ -5,6 +5,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "chart.js": "2.9.4",
     "faunadb": "4.1.1",
     "next": "10.0.8",
     "react": "17.0.1",
