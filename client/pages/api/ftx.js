@@ -10,11 +10,11 @@ export default (req, res) => {
     faunaClient.query(getAverageRate(24)),
     faunaClient.query(getAverageRate(24 * 7)),
   ]).then(function ([day, week]) {
-    const past_day_average_apy = Math.pow(Math.pow(1 + day.data[0], 24), 365);
-    const past_week_average_apy = Math.pow(Math.pow(1 + week.data[0], 24), 365);
+    const past_day_average_apr = 1 + day.data[0] * 24 * 365;
+    const past_week_average_apr = 1 + week.data[0] * 24 * 365;
     return res
       .status(200)
-      .json({ past_day_average_apy, past_week_average_apy });
+      .json({ past_day_average_apr, past_week_average_apr });
   });
 };
 
