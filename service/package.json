@@ -3,5 +3,8 @@
     "ccxt": "1.42.96",
     "date-fns": "2.19.0",
     "faunadb": "4.1.1"
+  },
+  "devDependencies": {
+    "lodash": "4.17.21"
   }
 }

@@ -5,6 +5,7 @@ const faunadb = require("faunadb");
 const startOfHour = require("date-fns/startOfHour");
 const subHours = require("date-fns/subHours");
 const formatISO = require("date-fns/formatISO");
+const memoize = require("lodash/memoize");
 
 const ftx = new cctx.ftx({
   apiKey: process.env.FTX_API_KEY,
@@ -18,15 +19,29 @@ const q = faunadb.query;
 
 const time = formatISO(startOfHour(subHours(new Date(), 1)));
 
-faunaClient
-  .query(
-    q.Get(q.Match(q.Index("ftx_rates_by_coin_time"), ["USD", q.Time(time)]))
-  )
-  .catch(function (ret) {
-    return ftx.privateGetSpotMarginLendingRates().then(function ({ result }) {
+const getRateFromDatabase = memoize(function (coin) {
+  return faunaClient.query(
+    q.Get(q.Match(q.Index("ftx_rates_by_coin_time"), [coin, q.Time(time)]))
+  );
+});
+
+const getRatesFromFtx = memoize(function () {
+  return ftx.privateGetSpotMarginLendingRates();
+});
+
+Promise.all([
+  processCoin("DAI"),
+  processCoin("EUR"),
+  processCoin("USD"),
+  processCoin("USDT"),
+]);
+
+function processCoin(targetedCoin) {
+  return getRateFromDatabase(targetedCoin).catch(function (ret) {
+    return getRatesFromFtx().then(function ({ result }) {
       const savingRates = result
         .filter(function ({ coin }) {
-          return coin === "USD";
+          return coin === targetedCoin;
         })
         .map(function ({ coin, previous: rate }) {
           faunaClient.query(
@@ -42,3 +57,4 @@ faunaClient
       return Promise.all(savingRates);
     });
   });
+}
