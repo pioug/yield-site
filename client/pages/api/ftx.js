@@ -6,6 +6,12 @@ const faunaClient = new faunadb.Client({
 const q = faunadb.query;
 
 export default (req, res) => {
+  return get_rates().then(function (data) {
+    return res.status(200).json(data);
+  });
+};
+
+export function get_rates() {
   return faunaClient
     .query(getRecentRates(24 * 7))
     .then(function ({ data: past_week_rates }) {
@@ -17,14 +23,14 @@ export default (req, res) => {
       const past_day_average_apr = getAverageRate(past_day_rates);
       const past_week_average_apr = getAverageRate(past_week_rates);
 
-      return res.status(200).json({
+      return {
         past_day_average_apr,
         past_day_rates,
         past_week_average_apr,
         past_week_rates,
-      });
+      };
     });
-};
+}
 
 function convert_hourly_to_yearly(hourly_rate) {
   return hourly_rate * 24 * 365;

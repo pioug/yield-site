@@ -1,22 +1,20 @@
 import Chart from "chart.js";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
+import { get_rates } from "./api/ftx.js";
 
 const chart_color_red = "rgb(255, 99, 132)";
 
-export default function HomePage() {
-  const canvas = useRef(null);
-  const [data, setData] = useState({
-    past_week_rates: [],
-  });
-  useEffect(function () {
-    fetch("/api/ftx")
-      .then((response) => response.json())
-      .then(function (data) {
-        setData(data);
-      });
-  }, []);
+export async function getStaticProps() {
+  const data = await get_rates();
+  return {
+    props: data,
+    revalidate: 600,
+  };
+}
 
+export default function HomePage(data) {
+  const canvas = useRef(null);
   useEffect(
     function () {
       const context2d = canvas.current.getContext("2d");
