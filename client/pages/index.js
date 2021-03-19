@@ -99,6 +99,10 @@ export default function HomePage() {
   );
   return (
     <main>
+      <Head>
+        <title>Earn.fyi</title>
+        <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
+      </Head>
       <h1>APR for lending USD on FTX</h1>
       <div>
         <p>
