@@ -1,0 +1,21 @@
+name: get-bitfinex-rates
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-${{ hashFiles('**/package-lock.json') }}
+      - run: |
+          cd service
+          npm ci
+          node bitfinex.js
+        env:
+          FAUNA_SECRET: ${{ secrets.FAUNA_SECRET }}
