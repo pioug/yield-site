@@ -10,3 +10,26 @@ main {
 canvas {
   width: 100%;
 }
+
+table {
+  font-variant-numeric: tabular-nums;
+}
+
+thead {
+  text-align: center;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  text-align: right;
+}
+
+th,
+td {
+  padding: 2px 8px;
+}
