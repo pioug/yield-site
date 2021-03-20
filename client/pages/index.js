@@ -58,6 +58,9 @@ export default function HomePage({ data }) {
           }),
         },
         options: {
+          animation: {
+            duration: 0,
+          },
           responsive: true,
           scales: {
             xAxes: [
