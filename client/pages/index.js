@@ -1,7 +1,8 @@
 import Chart from "chart.js";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import { get_rates } from "./api/ftx.js";
+import { get_ftx_rates } from "./api/ftx.js";
+import { get_bitfinex_rates } from "./api/bitfinex.js";
 
 const chart_color_red = "rgb(255, 99, 132)";
 const chart_color_orange = "rgb(255, 159, 64)";
@@ -22,11 +23,21 @@ const chart_colors = [
 ];
 
 export async function getStaticProps() {
-  const data = await get_rates();
-  return {
-    props: { data },
-    revalidate: 600,
-  };
+  return Promise.all([get_bitfinex_rates(), get_ftx_rates()]).then(function ([
+    bitfinex_rates,
+    ftx_rates,
+  ]) {
+    bitfinex_rates.forEach(function (rate) {
+      rate.coin += " (Bitfinex)";
+    });
+    ftx_rates.forEach(function (rate) {
+      rate.coin += " (FTX)";
+    });
+    return {
+      props: { data: [...ftx_rates, ...bitfinex_rates] },
+      revalidate: 600,
+    };
+  });
 }
 
 export default function HomePage({ data }) {
@@ -95,7 +106,7 @@ export default function HomePage({ data }) {
             ],
           },
           tooltips: {
-            mode: 'index',
+            mode: "index",
             callbacks: {
               title: function ([a]) {
                 return formatDateTime(new Date(a.label));
@@ -120,7 +131,7 @@ export default function HomePage({ data }) {
         <title>Earn.fyi</title>
         <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
       </Head>
-      <h1>APR for margin lending on FTX</h1>
+      <h1>APR for margin lending on FTX and Bitfinex</h1>
       <div>
         <div>
           <canvas ref={canvas} />

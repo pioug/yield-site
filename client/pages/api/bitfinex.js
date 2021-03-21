@@ -1,19 +1,15 @@
 const faunadb = require("faunadb");
+const subHours = require("date-fns/subHours");
+const formatISO = require("date-fns/formatISO");
 
 const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET,
 });
 const q = faunadb.query;
 
-export default (req, res) => {
-  return get_rates().then(function (data) {
-    return res.status(200).json(data);
-  });
-};
-
-export function get_ftx_rates() {
+export function get_bitfinex_rates() {
   return Promise.all(
-    ["DAI", "EUR", "USD", "USDT"].map(function (coin) {
+    ["USD", "UST"].map(function (coin) {
       return get_coin_rates(coin).then(function (data) {
         return {
           coin,
@@ -50,17 +46,22 @@ export function get_ftx_rates() {
   });
 }
 
-function fill_dataset(array, length, filler) {
-  return filler.slice(0, length - array.length).concat(array);
+function fill_dataset(array, length) {
+  const filler = Array.from({ length: length - array.length }, function (v, i) {
+    return [
+      formatISO(subHours(new Date(array[0][0]), length - array.length + i)),
+    ];
+  });
+  return filler.concat(array);
 }
 
 function get_coin_rates(coin) {
   return faunaClient
-    .query(getRecentCoinRates(coin, 24 * 7))
+    .query(get_recent_coin_rates(coin, 24 * 7))
     .then(function ({ data: past_week_rates }) {
       past_week_rates = past_week_rates.reverse();
       past_week_rates.forEach(function (rate) {
-        rate[1] = convert_hourly_to_yearly(rate[1]);
+        rate[1] = convert_percent_to_decimal(rate[1]);
       });
 
       const past_day_rates = past_week_rates.slice(-24);
@@ -76,8 +77,8 @@ function get_coin_rates(coin) {
     });
 }
 
-function convert_hourly_to_yearly(hourly_rate) {
-  return hourly_rate * 24 * 365;
+function convert_percent_to_decimal(percent) {
+  return percent / 100;
 }
 
 function getAverageRate(array) {
@@ -89,9 +90,9 @@ function getAverageRate(array) {
   );
 }
 
-function getRecentCoinRates(coin, hourCount) {
+function get_recent_coin_rates(coin, hourCount) {
   return q.Map(
-    q.Paginate(q.Match(q.Index("ftx_rates_by_coin_time_desc"), coin), {
+    q.Paginate(q.Match(q.Index("bitfinex_rates_by_coin_time_desc"), coin), {
       size: hourCount,
     }),
     q.Lambda((time, coin, rate, ref) => [q.ToString(time), rate])
