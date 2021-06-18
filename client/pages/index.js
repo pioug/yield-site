@@ -1,8 +1,30 @@
-import Chart from "chart.js";
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  LineController,
+  PointElement,
+  LineElement,
+  Tooltip,
+  TimeSeriesScale,
+  Legend,
+} from "chart.js";
+import "chartjs-adapter-date-fns";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { get_ftx_rates } from "./api/ftx.js";
 import { get_bitfinex_rates } from "./api/bitfinex.js";
+
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  LineController,
+  PointElement,
+  LineElement,
+  Tooltip,
+  TimeSeriesScale,
+  Legend
+);
 
 const chart_color_red = "rgb(255, 99, 132)";
 const chart_color_orange = "rgb(255, 159, 64)";
@@ -62,6 +84,8 @@ export default function HomePage({ data }) {
               fill: false,
               backgroundColor: chart_colors[index],
               borderColor: chart_colors[index],
+              borderCapStyle: 'round',
+              borderJoinStyle: 'round',
               data: d.past_week_rates.map(
                 ([, rate]) => Math.round(rate * 10000) / 100
               ),
@@ -73,46 +97,41 @@ export default function HomePage({ data }) {
             duration: 0,
           },
           responsive: true,
-          scales: {
-            xAxes: [
-              {
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: "Time",
+          plugins: {
+            tooltip: {
+              mode: "index",
+              callbacks: {
+                title: function ([a]) {
+                  return formatDateTime(new Date(a.parsed.x));
                 },
-                ticks: {
-                  callback: function (dataLabel, index) {
-                    return index % 6 === 0
-                      ? formatDate(new Date(dataLabel))
-                      : "";
-                  },
+                label: function (a) {
+                  return `${data[a.datasetIndex].coin}: ${a.parsed.y}%`;
                 },
               },
-            ],
-            yAxes: [
-              {
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: "APR (%)",
-                },
-                ticks: {
-                  callback: function (dataLabel) {
-                    return `${dataLabel}%`;
-                  },
-                },
-              },
-            ],
+            },
           },
-          tooltips: {
-            mode: "index",
-            callbacks: {
-              title: function ([a]) {
-                return formatDateTime(new Date(a.label));
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "Time",
               },
-              label: function (a) {
-                return `${data[a.datasetIndex].coin}: ${a.value}%`;
+              time: {
+                unit: "day",
+              },
+              type: "timeseries",
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "APR (%)",
+              },
+              ticks: {
+                callback: function (dataLabel) {
+                  return `${dataLabel}%`;
+                },
               },
             },
           },
