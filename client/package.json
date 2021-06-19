@@ -6,11 +6,11 @@
   },
   "dependencies": {
     "chart.js": "3.3.2",
-    "chartjs-adapter-date-fns": "1.1.0-beta.1",
-    "date-fns": "2.19.0",
-    "faunadb": "4.1.1",
+    "chartjs-adapter-date-fns": "2.0.0",
+    "date-fns": "2.22.1",
+    "faunadb": "4.3.0",
     "next": "11.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   }
 }

@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "ccxt": "1.42.96",
-    "date-fns": "2.19.0",
-    "faunadb": "4.1.1",
+    "ccxt": "1.51.64",
+    "date-fns": "2.22.1",
+    "faunadb": "4.3.0",
     "got": "11.8.2"
   },
   "devDependencies": {
