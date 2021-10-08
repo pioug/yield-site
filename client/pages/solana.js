@@ -5,9 +5,10 @@ export async function getStaticProps() {
     get_mercurial_pools(),
     get_orca_pools(),
     get_saber_pools(),
-  ]).then(function ([mercurial_pools, orca_pools, saber_pools]) {
+    get_sunny_pools(),
+  ]).then(function ([mercurial_pools, orca_pools, saber_pools, sunny_pools]) {
     return {
-      props: { data: [mercurial_pools, orca_pools, saber_pools] },
+      props: { data: [mercurial_pools, orca_pools, saber_pools, sunny_pools] },
       revalidate: 600,
     };
   });
@@ -74,6 +75,14 @@ function get_orca_pools() {
 
 function get_saber_pools() {
   return fetch("https://pioug.github.io/yield-data/saber.json").then(function (
+    response
+  ) {
+    return response.json();
+  });
+}
+
+function get_sunny_pools() {
+  return fetch("https://pioug.github.io/yield-data/sunny.json").then(function (
     response
   ) {
     return response.json();
