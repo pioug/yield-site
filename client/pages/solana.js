@@ -4,11 +4,26 @@ export async function getStaticProps() {
   return Promise.all([
     get_mercurial_pools(),
     get_orca_pools(),
+    get_raydium_pools(),
     get_saber_pools(),
     get_sunny_pools(),
-  ]).then(function ([mercurial_pools, orca_pools, saber_pools, sunny_pools]) {
+  ]).then(function ([
+    mercurial_pools,
+    orca_pools,
+    raydium_pools,
+    saber_pools,
+    sunny_pools,
+  ]) {
     return {
-      props: { data: [mercurial_pools, orca_pools, saber_pools, sunny_pools] },
+      props: {
+        data: [
+          mercurial_pools,
+          orca_pools,
+          raydium_pools,
+          saber_pools,
+          sunny_pools,
+        ],
+      },
       revalidate: 600,
     };
   });
@@ -71,6 +86,14 @@ function get_orca_pools() {
   ) {
     return response.json();
   });
+}
+
+function get_raydium_pools() {
+  return fetch("https://pioug.github.io/yield-data/raydium.json").then(
+    function (response) {
+      return response.json();
+    }
+  );
 }
 
 function get_saber_pools() {
