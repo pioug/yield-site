@@ -6,12 +6,14 @@ export async function getStaticProps() {
     get_orca_pools(),
     get_raydium_pools(),
     get_saber_pools(),
+    get_solfarm_pools(),
     get_sunny_pools(),
   ]).then(function ([
     mercurial_pools,
     orca_pools,
     raydium_pools,
     saber_pools,
+    solfarm_pools,
     sunny_pools,
   ]) {
     return {
@@ -21,6 +23,7 @@ export async function getStaticProps() {
           orca_pools,
           raydium_pools,
           saber_pools,
+          solfarm_pools,
           sunny_pools,
         ],
       },
@@ -110,6 +113,14 @@ function get_saber_pools() {
   ) {
     return response.json();
   });
+}
+
+function get_solfarm_pools() {
+  return fetch("https://pioug.github.io/yield-data/solfarm.json").then(
+    function (response) {
+      return response.json();
+    }
+  );
 }
 
 function get_sunny_pools() {
