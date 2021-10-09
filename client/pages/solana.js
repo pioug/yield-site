@@ -35,6 +35,7 @@ export default function SolanaPage({ data }) {
       <Head>
         <title>Earn.fyi</title>
         <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
+        <meta name="color-scheme" content="dark light" />
       </Head>
       <h1>Yield farming on Solana</h1>
       {data.map(function (platform) {

@@ -84,8 +84,8 @@ export default function HomePage({ data }) {
               fill: false,
               backgroundColor: chart_colors[index],
               borderColor: chart_colors[index],
-              borderCapStyle: 'round',
-              borderJoinStyle: 'round',
+              borderCapStyle: "round",
+              borderJoinStyle: "round",
               data: d.past_week_rates.map(
                 ([, rate]) => Math.round(rate * 10000) / 100
               ),
@@ -149,6 +149,7 @@ export default function HomePage({ data }) {
       <Head>
         <title>Earn.fyi</title>
         <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
+        <meta name="color-scheme" content="dark light" />
       </Head>
       <h1>APR for margin lending on FTX and Bitfinex</h1>
       <div>
