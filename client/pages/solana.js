@@ -129,8 +129,13 @@ function get_solfarm_pools() {
   return fetch("https://pioug.github.io/yield-data/solfarm.json").then(
     function (response) {
       return response.json();
-    }
-  );
+    })
+    .then(function (result) {
+      result.data.forEach(function (pool) {
+        pool.apy = pool.apy.replace(" ", "");
+      });
+      return result;
+    });
 }
 
 function get_sunny_pools() {
