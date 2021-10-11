@@ -15,6 +15,7 @@ canvas {
 
 table {
   font-variant-numeric: tabular-nums;
+  line-height: calc(1em + 2px);
 }
 
 thead {
@@ -33,5 +34,5 @@ td:not(:first-child) {
 
 th,
 td {
-  padding: 1px 6px;
+  padding: 2px 6px;
 }

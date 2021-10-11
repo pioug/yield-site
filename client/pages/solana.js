@@ -19,13 +19,13 @@ export async function getStaticProps() {
     return {
       props: {
         data: [
-          mercurial_pools,
-          orca_pools,
-          raydium_pools,
-          saber_pools,
-          solfarm_pools,
-          sunny_pools,
-        ],
+          flattenPools(mercurial_pools, "mercurial"),
+          flattenPools(orca_pools, "orca"),
+          flattenPools(raydium_pools, "raydium"),
+          flattenPools(saber_pools, "saber"),
+          flattenPools(solfarm_pools, "solfarm"),
+          flattenPools(sunny_pools, "sunny"),
+        ].flat(),
       },
       revalidate: 600,
     };
@@ -41,33 +41,43 @@ export default function SolanaPage({ data }) {
         <meta name="color-scheme" content="dark light" />
       </Head>
       <h1>Yield farming on Solana</h1>
-      {data.map(function (platform) {
-        return (
-          <section key={platform.name}>
-            <h2>{platform.name}</h2>
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Pool</th>
-                    <th>{"apr" in platform.data[0] ? "APR" : "APY"}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {platform.data.map(function (pool, index) {
-                    return (
-                      <tr key={index}>
-                        <td>{pool.name}</td>
-                        <td>{pool.apy || pool.apr}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        );
-      })}
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Pool</th>
+            <th>Yield</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(function (pool, index) {
+            return (
+              <tr key={index}>
+                <td style={{ padding: 0 }}>
+                  <img
+                    alt={pool.platform.name}
+                    height="16"
+                    src={`/${pool.platform.id}.webp`}
+                    style={{ verticalAlign: "middle" }}
+                    title={pool.platform.name}
+                    width="16"
+                  />
+                </td>
+                <td>{pool.name}</td>
+                <td>{pool.apy || pool.apr}</td>
+                <td
+                  style={{
+                    "font-variant-caps": "all-small-caps",
+                  }}
+                >
+                  {"apy" in pool ? "APY" : "APR"}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </main>
   );
 }
@@ -129,4 +139,13 @@ function get_sunny_pools() {
   ) {
     return response.json();
   });
+}
+
+function flattenPools(dataset, id) {
+  const { data, ...platform } = dataset;
+  platform.id = id;
+  data.forEach(function (pool) {
+    pool.platform = platform;
+  });
+  return data;
 }
