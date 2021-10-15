@@ -2,6 +2,7 @@ import Head from "next/head";
 
 export async function getStaticProps() {
   return Promise.all([
+    get_atrix_pools(),
     get_mercurial_pools(),
     get_orca_pools(),
     get_raydium_pools(),
@@ -9,6 +10,7 @@ export async function getStaticProps() {
     get_sunny_pools(),
     get_tulip_pools(),
   ]).then(function ([
+    atrix_pools,
     mercurial_pools,
     orca_pools,
     raydium_pools,
@@ -19,6 +21,7 @@ export async function getStaticProps() {
     return {
       props: {
         data: [
+          flattenPools(atrix_pools, "atrix"),
           flattenPools(mercurial_pools, "mercurial"),
           flattenPools(orca_pools, "orca"),
           flattenPools(raydium_pools, "raydium"),
@@ -84,6 +87,14 @@ export default function SolanaPage({ data }) {
 
 function toReadablePercentage(value) {
   return (value * 100).toFixed(2) + "%";
+}
+
+function get_atrix_pools() {
+  return fetch("https://pioug.github.io/yield-data/atrix.json").then(function (
+    response
+  ) {
+    return response.json();
+  });
 }
 
 function get_mercurial_pools() {
