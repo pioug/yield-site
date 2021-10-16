@@ -36,6 +36,10 @@ export async function getStaticProps() {
 }
 
 export default function SolanaPage({ data }) {
+  const intl = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  });
   return (
     <main>
       <Head>
@@ -68,7 +72,13 @@ export default function SolanaPage({ data }) {
                   />
                 </td>
                 <td>{pool.name}</td>
-                <td>{pool.apy || pool.apr}</td>
+                <td
+                  title={`Updated on: ${intl.format(
+                    new Date(pool.platform.timetamp)
+                  )}`}
+                >
+                  {pool.apy || pool.apr}
+                </td>
                 <td
                   style={{
                     "font-variant-caps": "all-small-caps",
