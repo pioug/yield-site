@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { formatDistanceToNow } from "date-fns";
 
 export async function getStaticProps() {
   return Promise.all([
@@ -36,10 +37,6 @@ export async function getStaticProps() {
 }
 
 export default function SolanaPage({ data }) {
-  const intl = new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "medium",
-  });
   return (
     <main>
       <Head>
@@ -73,15 +70,15 @@ export default function SolanaPage({ data }) {
                 </td>
                 <td>{pool.name}</td>
                 <td
-                  title={`Updated on: ${intl.format(
+                  title={`${formatDistanceToNow(
                     new Date(pool.platform.timetamp)
-                  )}`}
+                  )} ago`}
                 >
                   {pool.apy || pool.apr}
                 </td>
                 <td
                   style={{
-                    "font-variant-caps": "all-small-caps",
+                    fontVariantCaps: "all-small-caps",
                   }}
                 >
                   {"apy" in pool ? "APY" : "APR"}
