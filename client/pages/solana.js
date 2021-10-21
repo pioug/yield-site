@@ -31,7 +31,7 @@ export async function getStaticProps() {
           flattenPools(tulip_pools, "tulip"),
         ].flat(),
       },
-      revalidate: 600,
+      revalidate: 60,
     };
   });
 }
