@@ -59,14 +59,16 @@ export default function SolanaPage({ data }) {
             return (
               <tr key={index}>
                 <td style={{ padding: 0 }}>
-                  <img
-                    alt={pool.platform.name}
-                    height="16"
-                    src={`/${pool.platform.id}.webp`}
-                    style={{ verticalAlign: "middle" }}
-                    title={pool.platform.name}
-                    width="16"
-                  />
+                  <a href={pool.platform.url} style={{ display: "flex" }}>
+                    <img
+                      alt={pool.platform.name}
+                      height="16"
+                      src={`/${pool.platform.id}.webp`}
+                      style={{ verticalAlign: "middle" }}
+                      title={pool.platform.name}
+                      width="16"
+                    />
+                  </a>
                 </td>
                 <td>{pool.name}</td>
                 <td
