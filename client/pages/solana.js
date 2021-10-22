@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { formatDistanceToNow } from "date-fns";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return Promise.all([
     get_atrix_pools(),
     get_mercurial_pools(),
@@ -31,7 +31,6 @@ export async function getStaticProps() {
           flattenPools(tulip_pools, "tulip"),
         ].flat(),
       },
-      revalidate: 60,
     };
   });
 }
