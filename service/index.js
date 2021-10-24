@@ -37,7 +37,7 @@ Promise.all([
 ]);
 
 function processCoin(targetedCoin) {
-  return getRateFromDatabase(targetedCoin).catch(function (ret) {
+  return getRateFromDatabase(targetedCoin).catch(function () {
     return getRatesFromFtx().then(function ({ result }) {
       const savingRates = result
         .filter(function ({ coin }) {

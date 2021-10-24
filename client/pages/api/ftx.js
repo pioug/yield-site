@@ -5,12 +5,6 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
-export default (req, res) => {
-  return get_rates().then(function (data) {
-    return res.status(200).json(data);
-  });
-};
-
 export function get_ftx_rates() {
   return Promise.all(
     ["DAI", "EUR", "USD", "USDT"].map(function (coin) {
@@ -94,6 +88,6 @@ function getRecentCoinRates(coin, hourCount) {
     q.Paginate(q.Match(q.Index("ftx_rates_by_coin_time_desc"), coin), {
       size: hourCount,
     }),
-    q.Lambda((time, coin, rate, ref) => [q.ToString(time), rate])
+    q.Lambda((time, coin, rate, ref) => [q.ToString(time), rate]) // eslint-disable-line
   );
 }

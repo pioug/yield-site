@@ -95,6 +95,6 @@ function get_recent_coin_rates(coin, hourCount) {
     q.Paginate(q.Match(q.Index("bitfinex_rates_by_coin_time_desc"), coin), {
       size: hourCount,
     }),
-    q.Lambda((time, coin, rate, ref) => [q.ToString(time), rate])
+    q.Lambda((time, coin, rate, ref) => [q.ToString(time), rate]) // eslint-disable-line
   );
 }

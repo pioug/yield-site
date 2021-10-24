@@ -93,10 +93,6 @@ export default function SolanaPage({ data }) {
   );
 }
 
-function toReadablePercentage(value) {
-  return (value * 100).toFixed(2) + "%";
-}
-
 function get_atrix_pools() {
   return fetch("https://pioug.github.io/yield-data/atrix.json").then(function (
     response

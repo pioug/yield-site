@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { get_ftx_rates } from "./api/ftx.js";
 import { get_bitfinex_rates } from "./api/bitfinex.js";
 
@@ -67,9 +67,6 @@ export default function HomePage({ data }) {
   useEffect(
     function () {
       const context2d = canvas.current.getContext("2d");
-      const formatDate = new Intl.DateTimeFormat(navigator.language, {
-        dateStyle: "short",
-      }).format;
       const formatDateTime = new Intl.DateTimeFormat(navigator.language, {
         dateStyle: "short",
         timeStyle: "short",
