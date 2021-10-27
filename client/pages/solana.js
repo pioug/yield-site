@@ -29,7 +29,11 @@ export async function getServerSideProps() {
           flattenPools(saber_pools, "saber"),
           flattenPools(sunny_pools, "sunny"),
           flattenPools(tulip_pools, "tulip"),
-        ].flat(),
+        ]
+          .flat()
+          .filter(function (pool) {
+            return pool.apr || pool.apy;
+          }),
       },
     };
   });
