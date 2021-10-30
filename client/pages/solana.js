@@ -3,6 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 
 export async function getServerSideProps() {
   return Promise.all([
+    get_aldrin_pools(),
     get_atrix_pools(),
     get_mercurial_pools(),
     get_orca_pools(),
@@ -11,6 +12,7 @@ export async function getServerSideProps() {
     get_sunny_pools(),
     get_tulip_pools(),
   ]).then(function ([
+    aldrin_pools,
     atrix_pools,
     mercurial_pools,
     orca_pools,
@@ -22,6 +24,7 @@ export async function getServerSideProps() {
     return {
       props: {
         data: [
+          flattenPools(aldrin_pools, "aldrin"),
           flattenPools(atrix_pools, "atrix"),
           flattenPools(mercurial_pools, "mercurial"),
           flattenPools(orca_pools, "orca"),
@@ -95,6 +98,14 @@ export default function SolanaPage({ data }) {
       </table>
     </main>
   );
+}
+
+function get_aldrin_pools() {
+  return fetch("https://pioug.github.io/yield-data/aldrin.json").then(function (
+    response
+  ) {
+    return response.json();
+  });
 }
 
 function get_atrix_pools() {
