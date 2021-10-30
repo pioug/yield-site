@@ -50,7 +50,7 @@ export default function SolanaPage({ data }) {
         <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
         <meta name="color-scheme" content="dark light" />
       </Head>
-      <h1>Yield farming on Solana</h1>
+      <h1>Liquidity Pools on Solana</h1>
       <table>
         <thead>
           <tr>
