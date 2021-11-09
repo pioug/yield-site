@@ -5,6 +5,7 @@ export async function getServerSideProps() {
   return Promise.all([
     get_aldrin_pools(),
     get_atrix_pools(),
+    get_cropper_pools(),
     get_mercurial_pools(),
     get_orca_pools(),
     get_raydium_pools(),
@@ -14,6 +15,7 @@ export async function getServerSideProps() {
   ]).then(function ([
     aldrin_pools,
     atrix_pools,
+    cropper_pools,
     mercurial_pools,
     orca_pools,
     raydium_pools,
@@ -26,6 +28,7 @@ export async function getServerSideProps() {
         data: [
           flattenPools(aldrin_pools, "aldrin"),
           flattenPools(atrix_pools, "atrix"),
+          flattenPools(cropper_pools, "cropper"),
           flattenPools(mercurial_pools, "mercurial"),
           flattenPools(orca_pools, "orca"),
           flattenPools(raydium_pools, "raydium"),
@@ -114,6 +117,14 @@ function get_atrix_pools() {
   ) {
     return response.json();
   });
+}
+
+function get_cropper_pools() {
+  return fetch("https://pioug.github.io/yield-data/cropper.json").then(
+    function (response) {
+      return response.json();
+    }
+  );
 }
 
 function get_mercurial_pools() {
