@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "ccxt": "1.58.25",
-    "date-fns": "2.25.0",
+    "ccxt": "1.62.40",
+    "date-fns": "2.26.0",
     "faunadb": "4.4.1",
-    "got": "11.8.2"
+    "got": "11.8.3"
   },
   "devDependencies": {
     "lodash": "4.17.21"
