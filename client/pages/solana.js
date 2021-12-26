@@ -8,6 +8,7 @@ export async function getServerSideProps() {
     get_cropper_pools(),
     get_mercurial_pools(),
     get_orca_pools(),
+    get_quarry_pools(),
     get_raydium_pools(),
     get_saber_pools(),
     get_sunny_pools(),
@@ -18,6 +19,7 @@ export async function getServerSideProps() {
     cropper_pools,
     mercurial_pools,
     orca_pools,
+    quarry_pools,
     raydium_pools,
     saber_pools,
     sunny_pools,
@@ -31,6 +33,7 @@ export async function getServerSideProps() {
           flattenPools(cropper_pools, "cropper"),
           flattenPools(mercurial_pools, "mercurial"),
           flattenPools(orca_pools, "orca"),
+          flattenPools(quarry_pools, "quarry"),
           flattenPools(raydium_pools, "raydium"),
           flattenPools(saber_pools, "saber"),
           flattenPools(sunny_pools, "sunny"),
@@ -148,6 +151,14 @@ function get_orca_pools() {
       });
       return result;
     });
+}
+
+function get_quarry_pools() {
+  return fetch("https://pioug.github.io/yield-data/quarry.json").then(
+    function (response) {
+      return response.json();
+    }
+  );
 }
 
 function get_raydium_pools() {
