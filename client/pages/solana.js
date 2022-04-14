@@ -154,11 +154,11 @@ function get_orca_pools() {
 }
 
 function get_quarry_pools() {
-  return fetch("https://pioug.github.io/yield-data/quarry.json").then(
-    function (response) {
-      return response.json();
-    }
-  );
+  return fetch("https://pioug.github.io/yield-data/quarry.json").then(function (
+    response
+  ) {
+    return response.json();
+  });
 }
 
 function get_raydium_pools() {
