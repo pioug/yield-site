@@ -34,6 +34,7 @@ Promise.all([
   processCoin("EUR"),
   processCoin("USD"),
   processCoin("USDT"),
+  processCoin("UST"),
 ]);
 
 function processCoin(targetedCoin) {
