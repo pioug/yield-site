@@ -7,7 +7,7 @@ const q = faunadb.query;
 
 export function get_ftx_rates() {
   return Promise.all(
-    ["DAI", "EUR", "USD", "USDT", "UST"].map(function (coin) {
+    ["DAI", "EUR", "USD", "USDT"].map(function (coin) {
       return get_coin_rates(coin).then(function (data) {
         return {
           coin,
