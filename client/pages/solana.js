@@ -10,10 +10,7 @@ export async function getServerSideProps() {
     get_lifinity_pools(),
     get_mercurial_pools(),
     get_orca_pools(),
-    get_quarry_pools(),
     get_raydium_pools(),
-    get_saber_pools(),
-    get_sunny_pools(),
     get_tulip_pools(),
   ]).then(function ([
     aldrin_pools,
@@ -23,10 +20,7 @@ export async function getServerSideProps() {
     lifinity_pools,
     mercurial_pools,
     orca_pools,
-    quarry_pools,
     raydium_pools,
-    saber_pools,
-    sunny_pools,
     tulip_pools,
   ]) {
     return {
@@ -39,10 +33,7 @@ export async function getServerSideProps() {
           flattenPools(lifinity_pools, "lifinity"),
           flattenPools(mercurial_pools, "mercurial"),
           flattenPools(orca_pools, "orca"),
-          flattenPools(quarry_pools, "quarry"),
           flattenPools(raydium_pools, "raydium"),
-          flattenPools(saber_pools, "saber"),
-          flattenPools(sunny_pools, "sunny"),
           flattenPools(tulip_pools, "tulip"),
         ]
           .flat()
@@ -175,36 +166,12 @@ function get_orca_pools() {
     });
 }
 
-function get_quarry_pools() {
-  return fetch("https://pioug.github.io/yield-data/quarry.json").then(function (
-    response
-  ) {
-    return response.json();
-  });
-}
-
 function get_raydium_pools() {
   return fetch("https://pioug.github.io/yield-data/raydium.json").then(
     function (response) {
       return response.json();
     }
   );
-}
-
-function get_saber_pools() {
-  return fetch("https://pioug.github.io/yield-data/saber.json").then(function (
-    response
-  ) {
-    return response.json();
-  });
-}
-
-function get_sunny_pools() {
-  return fetch("https://pioug.github.io/yield-data/sunny.json").then(function (
-    response
-  ) {
-    return response.json();
-  });
 }
 
 function get_tulip_pools() {
