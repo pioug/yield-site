@@ -13,7 +13,7 @@ const q = faunadb.query;
 
 const time = formatISO(startOfHour(subHours(new Date(), 1)));
 
-Promise.all([processCoin("USD"), processCoin("UST")]);
+Promise.all([processCoin("USD")]);
 
 function processCoin(coin) {
   return got(

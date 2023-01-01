@@ -12,7 +12,6 @@ import {
 import "chartjs-adapter-date-fns";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
-import { get_ftx_rates } from "./api/ftx.js";
 import { get_bitfinex_rates } from "./api/bitfinex.js";
 
 Chart.register(
@@ -45,18 +44,14 @@ const chart_colors = [
 ];
 
 export async function getStaticProps() {
-  return Promise.all([get_bitfinex_rates(), get_ftx_rates()]).then(function ([
+  return Promise.all([get_bitfinex_rates()]).then(function ([
     bitfinex_rates,
-    ftx_rates,
   ]) {
     bitfinex_rates.forEach(function (rate) {
       rate.coin += " (Bitfinex)";
     });
-    ftx_rates.forEach(function (rate) {
-      rate.coin += " (FTX)";
-    });
     return {
-      props: { data: [...ftx_rates, ...bitfinex_rates] },
+      props: { data: [...bitfinex_rates] },
       revalidate: 600,
     };
   });
@@ -148,7 +143,7 @@ export default function HomePage({ data }) {
         <link rel="icon" type="image/png" href="/favicon32.png" sizes="32x32" />
         <meta name="color-scheme" content="dark light" />
       </Head>
-      <h1>APR for margin lending on FTX and Bitfinex</h1>
+      <h1>APR for margin lending on Bitfinex</h1>
       <div>
         <div>
           <canvas ref={canvas} />

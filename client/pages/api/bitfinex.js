@@ -9,7 +9,7 @@ const q = faunadb.query;
 
 export function get_bitfinex_rates() {
   return Promise.all(
-    ["USD", "UST"].map(function (coin) {
+    ["USD"].map(function (coin) {
       return get_coin_rates(coin).then(function (data) {
         return {
           coin,
