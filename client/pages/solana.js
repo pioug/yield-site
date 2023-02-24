@@ -8,7 +8,7 @@ export async function getServerSideProps() {
     get_crema_pools(),
     get_cropper_pools(),
     get_lifinity_pools(),
-    get_mercurial_pools(),
+    get_meteora_pools(),
     get_orca_pools(),
     get_raydium_pools(),
     get_tulip_pools(),
@@ -18,7 +18,7 @@ export async function getServerSideProps() {
     crema_pools,
     cropper_pools,
     lifinity_pools,
-    mercurial_pools,
+    meteora_pools,
     orca_pools,
     raydium_pools,
     tulip_pools,
@@ -31,7 +31,7 @@ export async function getServerSideProps() {
           flattenPools(crema_pools, "crema"),
           flattenPools(cropper_pools, "cropper"),
           flattenPools(lifinity_pools, "lifinity"),
-          flattenPools(mercurial_pools, "mercurial"),
+          flattenPools(meteora_pools, "meteora"),
           flattenPools(orca_pools, "orca"),
           flattenPools(raydium_pools, "raydium"),
           flattenPools(tulip_pools, "tulip"),
@@ -143,8 +143,8 @@ function get_lifinity_pools() {
   );
 }
 
-function get_mercurial_pools() {
-  return fetch("https://pioug.github.io/yield-data/mercurial.json").then(
+function get_meteora_pools() {
+  return fetch("https://pioug.github.io/yield-data/meteora.json").then(
     function (response) {
       return response.json();
     }
